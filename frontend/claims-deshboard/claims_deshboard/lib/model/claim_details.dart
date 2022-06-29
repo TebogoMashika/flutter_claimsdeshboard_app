@@ -2,7 +2,7 @@ class ClaimDetailsModel {
   var incidentDate;
   var incidentTime;
   var policyNumber;
-  //var claimedItems;
+  var claimedItems;
   var peril;
   var claimDescription;
   var contactPersonName;
@@ -20,16 +20,4 @@ class ClaimDetailsModel {
     this.contactPersonEmailAddress,
     this.contactPersonPhone,
   );
-
-  Map<String, dynamic> toMap() {
-    return {
-      'incidentDate': incidentDate,
-      'incidentTime': incidentTime,
-      'policyNumber': policyNumber,
-      'contactPersonName': contactPersonName,
-      'claimDescription': claimDescription,
-      'contactPersonEmailAddress': contactPersonEmailAddress,
-      'contactPersonPhone': contactPersonPhone
-    };
-  }
 }

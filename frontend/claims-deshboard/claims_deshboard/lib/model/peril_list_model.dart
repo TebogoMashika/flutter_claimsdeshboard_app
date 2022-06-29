@@ -1,9 +1,6 @@
 class PerilList {
-  int perilCd;
-  String perilName;
+  var peril;
+  var perilCd;
 
-  PerilList({
-    required this.perilCd,
-    required this.perilName,
-  });
+  PerilList({this.peril, this.perilCd});
 }

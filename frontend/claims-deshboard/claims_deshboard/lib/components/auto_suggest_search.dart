@@ -12,7 +12,7 @@ class AutoSuggestSearch extends SearchDelegate {
         onPressed: () {
           query = '';
         },
-        icon: const Icon(Icons.clear),
+        icon: Icon(Icons.clear),
       ),
     ];
   }
@@ -23,7 +23,7 @@ class AutoSuggestSearch extends SearchDelegate {
       onPressed: () {
         close(context, null);
       },
-      icon: const Icon(Icons.arrow_back),
+      icon: Icon(Icons.arrow_back),
     );
   }
 
@@ -60,14 +60,11 @@ class AutoSuggestSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List matchQuery = [];
+    List<String> matchQuery = [];
 
-    for (var items in searchTerms) {
-      if (items
-          .toString()
-          .toLowerCase()
-          .contains(query.toString().toLowerCase())) {
-        matchQuery.add(items);
+    for (var fruit in searchTerms) {
+      if (fruit.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(fruit);
       }
     }
 
@@ -76,7 +73,7 @@ class AutoSuggestSearch extends SearchDelegate {
       itemBuilder: (context, index) {
         var results = matchQuery[index];
         return ListTile(
-          title: Text('$results'),
+          title: Text(results),
           onTap: () {
             close(context, results);
           },
