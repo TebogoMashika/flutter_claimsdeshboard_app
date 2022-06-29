@@ -24,12 +24,13 @@ class _ClaimDetailsState extends State<ClaimDetails> {
   TextEditingController contactPersonNumberTextController =
       TextEditingController();
 
+  late ClaimDetailsModel claimDetailsModel;
   var autoSearchResults;
   var capturedDay;
   var capturedTime;
   DateTime currentDateAndTime = DateTime.now();
 
-  List<PerilList> searchListOfPerils = [];
+  List<String> searchListOfPerils = [];
 
   EdgeInsets topAndLeftSize =
       const EdgeInsets.only(top: 5, left: 20, right: 20);
@@ -42,8 +43,13 @@ class _ClaimDetailsState extends State<ClaimDetails> {
   }
 
   void _getListOfPerilsData() async {
-    searchListOfPerils = (await ApiService().getPerils())!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    var perils = (await ApiService().getPerils())!;
+
+    setState(() {
+      for (PerilList listItem in perils) {
+        searchListOfPerils.add(listItem.perilName);
+      }
+    });
   }
 
   @override
@@ -158,10 +164,10 @@ class _ClaimDetailsState extends State<ClaimDetails> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  onPressed: () {
+                  clipBehavior: Clip.hardEdge,
+                  onPressed: () async {
                     setState(() {
-                      ClaimDetailsModel claimDetailsModel = ClaimDetailsModel(
+                      claimDetailsModel = ClaimDetailsModel(
                         capturedDay,
                         capturedTime,
                         policyNumberTextController.text,
@@ -172,6 +178,8 @@ class _ClaimDetailsState extends State<ClaimDetails> {
                         contactPersonNumberTextController.text,
                       );
                     });
+
+                    (await ApiService().saveClaimDetails(claimDetailsModel))!;
                   },
                   child: const Text('DONE'),
                 ),
